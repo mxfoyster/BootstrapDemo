@@ -38,11 +38,9 @@
                 <span class="col">Number of Results: <span id="numResults"></span></span>
                 
                 <ul class="pagination col">
-                    <li class="page-item"><span class="page-link" id="pgBk">&lt;</span></li>
-                    <li class="page-item"><span class="page-link" >1</span></li>
-                    <li class="page-item"><span class="page-link" >2</span></li>
-                    <li class="page-item"><span class="page-link" >3</span></li>
-                    <li class="page-item"><span class="page-link" id="pgFwd">&gt;</span></li>
+                    <li class="page-item" id="backLi"><span class="page-link" id="pgBk">&lt;</span></li>
+                    
+                    <li class="page-item" id="fwdLi"><span class="page-link" id="pgFwd">&gt;</span></li>
                 </ul>
                 <form class="col" action=""> 
                     Results per page:&nbsp;                    
