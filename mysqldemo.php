@@ -7,6 +7,7 @@
     <!--Load bootstrap css-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
     <link rel="stylesheet" href="css/bootstrap_overrides.css">
+    <script src="js\querymodelcars.js" defer></script>
     <title>Bootstrap test</title>
 </head>
 <body>
@@ -31,9 +32,40 @@
         <h3 class="mt-5">Dynamic selection</h3>
         <p>Now, let's make something a little more complicated. We will stick to the same table within the database. By adding some more controls, we can give the user more options to search through all the listings. The default can be to list everything with a set limit on how many are displayed at once. From there, we can provide tools within our UI to filter the data and change the order which thems are displayed in. Bootstrap should simplify this process.</p>
         <p>To achieve this goal, we now have to change tack and update the data dynamically by manipulating the DOM. We can use JavaScript on the client side. the <i>fetch()</i> api will handle our requests and responses, <i>.innerHTML</i> will allow us to add and remove the contents of elements without reloading.</p>
-        
-        
-        
+        <hr>
+        <div class="container">
+            <div class="row">
+                <span class="col">Number of Results: <span id="numResults"></span></span>
+                
+                <ul class="pagination col">
+                    <li class="page-item"><span class="page-link" id="pgBk">&lt;</span></li>
+                    <li class="page-item"><span class="page-link" >1</span></li>
+                    <li class="page-item"><span class="page-link" >2</span></li>
+                    <li class="page-item"><span class="page-link" >3</span></li>
+                    <li class="page-item"><span class="page-link" id="pgFwd">&gt;</span></li>
+                </ul>
+                <form class="col" action=""> 
+                    Results per page:&nbsp;                    
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="numPerPageOption" id="inlineRadio1" value="option1" checked="checked">
+                        <label class="form-check-label" for="inlineRadio1">12</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="numPerPageOption" id="inlineRadio2" value="option2">
+                        <label class="form-check-label" for="inlineRadio2">24</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="numPerPageOption" id="inlineRadio3" value="option3" >
+                        <label class="form-check-label" for="inlineRadio3">48</label>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <hr>
+        <script>
+        dBaseResult = (<?php include 'includes/modelcarsall.php' ?>);
+        </script>
+        <div class="container" id="responseBox"></div>
     </div>
     <div class="row shadow p-3 mb-5 bg-body rounded mt-4">
         <?php include 'includes/footer.php' ?>
