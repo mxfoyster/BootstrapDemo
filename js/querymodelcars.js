@@ -5,13 +5,42 @@ const pgBack = document.getElementById("pgBk");
 const pgFwd = document.getElementById("pgFwd");
 const pagesInnerList = document.getElementById("pagesInnerList");
 const fwdLi = document.getElementById("fwdLi");
+const selectPLBox = document.getElementById("selectPLBox");
+const selectPVBox = document.getElementById("selectPVBox");
+const applyButton = document.getElementById("applyButton");
 
 for (var i = 0; i < radio.length; i++) radio[i].addEventListener('change', Validate);
 pgBack.addEventListener("click",()=>changePage("back"));
 pgFwd.addEventListener("click",()=>changePage("fwd"));
+applyButton.addEventListener("click",()=>getData("allByProductLine"));
+
 var colCounter = 1;
 var currentPage = 1;
 var numberPerPage;
+
+function populateProductLineListBox(){
+    //populate product line dropbox
+    dBaseProductLines.forEach((element, elementIndex) =>{
+        console.log(element.productLine);
+        var newElement = document.createElement('option');
+        selectPLBox.insertAdjacentElement('afterEnd', newElement);
+        newElement.setAttribute('value', elementIndex);
+        var htmlToInsert = element.productLine; //<option value="1">One</option>
+        newElement.innerHTML = htmlToInsert;
+        });
+}
+
+function populateProductVendorListBox(){
+    //populate product vendor dropbox
+    dBaseProductVendor.forEach((element, elementIndex) =>{
+        console.log(element.productVendor);
+        var newElement = document.createElement('option');
+        selectPVBox.insertAdjacentElement('afterEnd', newElement);
+        newElement.setAttribute('value', elementIndex);
+        var htmlToInsert = element.productVendor; //<option value="1">One</option>
+        newElement.innerHTML = htmlToInsert;
+        });
+}
 
 //Builds our columns according to page number & how many per page
 const buildData =  () =>{
@@ -80,6 +109,7 @@ function changePage(direction){
 
 //By extracting this, I can refresh without calling the radiobutton validate
 function UpdateDisplay(){
+    
     var thisResponse = buildData();
     if (thisResponse.startsWith("undefined")) thisResponse = thisResponse.substring(9,thisResponse.length); //HACK
     responseBox.innerHTML = thisResponse;
@@ -111,7 +141,46 @@ function buildPageNumbers(){
     });});
 }
 
+//TESTING FETCH TO POST SEARCH OPTIONS
+function getData(opts) {
+    var formData = new FormData();
+    formData.append('queryType', opts);
+    fetch('includes/modelcarsall.php', {
+      method: 'post',
+      body: formData
+    }).then(function(response) {
+      return response.json();
+    }).then(function(response) {
+        switch (opts){
+            case "all":
+                dBaseResult = response;
+                Validate();
+                break;
+            case "productLine":
+                dBaseProductLines = response;
+                populateProductLineListBox();
+                break;
+            case "productVendor":
+                dBaseProductVendor = response;
+                populateProductVendorListBox();
+                break;
+            case "allByProductLine":
+                dBaseResult = response;
+                Validate();
+                break;
+        }
+
+      });
+  }
+
+
+
 //we set this at the end to get an initial status for the number
 //per page.. Defaulted to 12 in the html by radiobutton selected
-Validate();
+//it will also give us our initial listings
 
+
+getData("all");
+getData("productLine");
+getData("productVendor");
+//Validate();

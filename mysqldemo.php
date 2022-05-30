@@ -1,16 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!--Load bootstrap css-->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
-    <link rel="stylesheet" href="css/bootstrap_overrides.css">
-    <script src="js\querymodelcars.js" defer></script>
-    <title>Bootstrap test</title>
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!--Load bootstrap css-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+        <link rel="stylesheet" href="css/bootstrap_overrides.css">
+        <script src="js\querymodelcars.js" defer></script>
+        <title>Bootstrap test</title>
+    </head>
 <body>
+
 <div class="container">
     <!--Header Here-->
     <?php include 'includes/header.php' ?>
@@ -32,8 +33,26 @@
         <h3 class="mt-5">Dynamic selection</h3>
         <p>Now, let's make something a little more complicated. We will stick to the same table within the database. By adding some more controls, we can give the user more options to search through all the listings. The default can be to list everything with a set limit on how many are displayed at once. From there, we can provide tools within our UI to filter the data and change the order which thems are displayed in. Bootstrap should simplify this process.</p>
         <p>To achieve this goal, we now have to change tack and update the data dynamically by manipulating the DOM. We can use JavaScript on the client side. the <i>fetch()</i> api will handle our requests and responses, <i>.innerHTML</i> will allow us to add and remove the contents of elements without reloading.</p>
-        <hr>
+        
         <div class="container">
+        
+            <span class="fs-6 fw-bold">Filters:</span>
+            <hr>
+            <div class="row">
+                <div class="col">
+                    <select class="form-select-sm" aria-label="Choose by product line">
+                        <option id="selectPLBox" selected disabled>Filter by Product Line</option>
+                    </select>
+                </div>
+                <div class="col">
+                    <select class="form-select-sm" aria-label="Choose by product vendor">
+                        <option id="selectPVBox" selected disabled>Filter by Product Vendor</option>
+                    </select>
+                </div>
+                <div class="col">
+                    <button type="button" class="btn btn-sml btn-primary float-end" id="applyButton">Apply</button>
+                </div>
+            </div><hr>
             <div class="row">
                 <span class="col">Number of Results: <span id="numResults"></span></span>
                 
@@ -58,10 +77,14 @@
                     </div>
                 </form>
             </div>
+            
         </div>
         <hr>
         <script>
-        dBaseResult = (<?php include 'includes/modelcarsall.php' ?>);
+        //  dBaseResult = (<?php //include 'includes/modelcarsall.php' ?>);
+        // dBaseProductLines = (<?php //include 'includes/modelcarsbyproductline.php' ?>);
+        // dBaseProductVendor = (<?php //include 'includes/modelcarsbyproductvendor.php' ?>);
+        
         </script>
         <div class="container" id="responseBox"></div>
     </div>
