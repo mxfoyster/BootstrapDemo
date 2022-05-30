@@ -1,5 +1,7 @@
 <?php
-    $queryType = $_POST['queryType'];
+    $queryType = $_POST['queryType']; 
+    $queryString = $_POST['queryString'];
+    $anotherQueryString = $_POST['queryString2'];
     require_once("dbasefunctions.php");
 
     $driver = new mysqli_driver();
@@ -24,7 +26,18 @@
                 $sql = "select distinct productVendor from products;"; 
             break;
             case "allByProductLine":
-                $sql = "select productName, productLine, productScale, buyPrice from products where productLine like 'Vintage Cars';";
+                $queryString = EscapeInput ($conn,$queryString); //escape input 
+                $sql = "select productName, productLine, productScale, buyPrice from products where productLine like '$queryString';";
+            break;
+            case "allByProductVendor":
+                $queryString = EscapeInput ($conn,$queryString); //escape input 
+                $sql = "select productName, productLine, productScale, buyPrice from products where productVendor like '$queryString';";
+            break;
+            case "allByLineAndVendor":
+                $queryString = EscapeInput ($conn,$queryString); //escape input 
+                $anotherQueryString = EscapeInput ($conn,$anotherQueryString); //escape input
+                //$sql = "select productName, productLine, productScale, buyPrice from products where productLine like '$queryString' and productVendor like '$AnotherQueryString';"; 
+                $sql = "select productName, productLine, productScale, buyPrice from products where productLine like '$queryString' and productVendor like '$anotherQueryString';";
             break;
 
         }
@@ -53,7 +66,7 @@
     catch (mysqli_sql_exception $e)
     {
         echo "Sorry, an Error occurred <br /> ";
-        echo $e; //*******REMOVE BEFORE UPLOADING*****/
+        //echo $e; //*******REMOVE BEFORE UPLOADING*****/
         return false;
     }
 ?>

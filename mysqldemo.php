@@ -40,13 +40,15 @@
             <hr>
             <div class="row">
                 <div class="col">
-                    <select class="form-select-sm" aria-label="Choose by product line">
-                        <option id="selectPLBox" selected disabled>Filter by Product Line</option>
+                    <div class="fs-6 fw-bold">Choose by Product Line</div>
+                    <select class="form-select-sm" id="selectPL" aria-label="Choose by product line" name="ProductLines">
+                        <option id="selectPL1stChild" value="0" selected>ALL</option>
                     </select>
                 </div>
                 <div class="col">
-                    <select class="form-select-sm" aria-label="Choose by product vendor">
-                        <option id="selectPVBox" selected disabled>Filter by Product Vendor</option>
+                    <div class="fs-6 fw-bold">Choose by Product Vendor</div>
+                    <select class="form-select-sm" id="selectPV" aria-label="Choose by product vendor" name="ProductVendors">
+                        <option id="selectPV1stChild" value="0" selected>ALL</option>
                     </select>
                 </div>
                 <div class="col">

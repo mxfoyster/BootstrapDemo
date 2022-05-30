@@ -5,41 +5,52 @@ const pgBack = document.getElementById("pgBk");
 const pgFwd = document.getElementById("pgFwd");
 const pagesInnerList = document.getElementById("pagesInnerList");
 const fwdLi = document.getElementById("fwdLi");
-const selectPLBox = document.getElementById("selectPLBox");
-const selectPVBox = document.getElementById("selectPVBox");
+const selectPL = document.getElementById("selectPL");
+const selectPV = document.getElementById("selectPV");
+const selectPL1stChild = document.getElementById("selectPL1stChild");
+const selectPV1stChild = document.getElementById("selectPV1stChild");
 const applyButton = document.getElementById("applyButton");
 
 for (var i = 0; i < radio.length; i++) radio[i].addEventListener('change', Validate);
 pgBack.addEventListener("click",()=>changePage("back"));
 pgFwd.addEventListener("click",()=>changePage("fwd"));
-applyButton.addEventListener("click",()=>getData("allByProductLine"));
+applyButton.addEventListener("click",()=>applyFilters());
 
 var colCounter = 1;
 var currentPage = 1;
 var numberPerPage;
 
+function applyFilters(){
+    var selectedPL = selectPL.value;
+    var selectedPV = selectPV.value
+    
+    //console.log(dBaseProductLines[2].productLine);
+    if (selectedPL != "0" && selectedPV == "0") getData("allByProductLine", selectedPL);
+    if (selectedPL == "0" && selectedPV != "0") getData("allByProductVendor", selectedPV);
+    if (selectedPL != "0" && selectedPV != "0") getData("allByLineAndVendor", selectedPL, selectedPV);
+    if (selectedPL == "0" && selectedPV == "0") getData("all");
+}
+
 function populateProductLineListBox(){
-    //populate product line dropbox
-    dBaseProductLines.forEach((element, elementIndex) =>{
-        console.log(element.productLine);
-        var newElement = document.createElement('option');
-        selectPLBox.insertAdjacentElement('afterEnd', newElement);
-        newElement.setAttribute('value', elementIndex);
-        var htmlToInsert = element.productLine; //<option value="1">One</option>
-        newElement.innerHTML = htmlToInsert;
-        });
+//populate product line dropbox
+dBaseProductLines.forEach((element, elementIndex) =>{
+    var newElement = document.createElement('option');
+    selectPL1stChild.insertAdjacentElement('afterEnd', newElement);
+    newElement.setAttribute('value', element.productLine);
+    var htmlToInsert = element.productLine; //<option value="1">One</option>
+    newElement.innerHTML = htmlToInsert;
+    });
 }
 
 function populateProductVendorListBox(){
     //populate product vendor dropbox
-    dBaseProductVendor.forEach((element, elementIndex) =>{
-        console.log(element.productVendor);
-        var newElement = document.createElement('option');
-        selectPVBox.insertAdjacentElement('afterEnd', newElement);
-        newElement.setAttribute('value', elementIndex);
-        var htmlToInsert = element.productVendor; //<option value="1">One</option>
-        newElement.innerHTML = htmlToInsert;
-        });
+dBaseProductVendor.forEach((element, elementIndex) =>{
+    var newElement = document.createElement('option');
+    selectPV1stChild.insertAdjacentElement('afterEnd', newElement);
+    newElement.setAttribute('value', element.productVendor);
+    var htmlToInsert = element.productVendor; //<option value="1">One</option>
+    newElement.innerHTML = htmlToInsert;
+    });
 }
 
 //Builds our columns according to page number & how many per page
@@ -63,6 +74,12 @@ const buildData =  () =>{
     }); //end of foreach loop
     colCounter = 1; //mustn't forget to reset this!!
     return listing;    
+}
+
+function noData(){
+    displayString = "<div class=\"row py-2\"><div class=\"col p-2 m-2 border bg-primary\"> SORRY, NO MATCH</div></div>";
+    responseBox.innerHTML = displayString;
+    numResults.innerHTML= "0";
 }
 
 //check our radiobuttons (norm. called from listeners)
@@ -142,14 +159,16 @@ function buildPageNumbers(){
 }
 
 //TESTING FETCH TO POST SEARCH OPTIONS
-function getData(opts) {
+function getData(opts, stringToQuery="", anotherStringToQuery="") {
     var formData = new FormData();
     formData.append('queryType', opts);
+    formData.append('queryString', stringToQuery);
+    formData.append('queryString2', anotherStringToQuery);
     fetch('includes/modelcarsall.php', {
       method: 'post',
       body: formData
     }).then(function(response) {
-      return response.json();
+        return response.json();
     }).then(function(response) {
         switch (opts){
             case "all":
@@ -165,22 +184,24 @@ function getData(opts) {
                 populateProductVendorListBox();
                 break;
             case "allByProductLine":
+                // dBaseResult = response;
+                // Validate();
+                // break;
+            case "allByProductVendor":
+                // dBaseResult = response;
+                // Validate();
+                // break;
+            case "allByLineAndVendor":
                 dBaseResult = response;
                 Validate();
                 break;
         }
 
+      }).catch (function (error){
+          noData();
       });
   }
-
-
-
-//we set this at the end to get an initial status for the number
-//per page.. Defaulted to 12 in the html by radiobutton selected
-//it will also give us our initial listings
-
-
+//Now we can call in some data to start
 getData("all");
 getData("productLine");
 getData("productVendor");
-//Validate();
