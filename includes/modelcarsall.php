@@ -14,24 +14,23 @@
         $conn = SetUpConnection($dbase);
         $error = ""; //Variable for storing our errors.
         $sql="";   
-        //$carName = EscapeInput ($conn,$carName); //escape input 
         
         switch($queryType){
             case "all":
-                $sql = "select productName, productLine, productScale, buyPrice from products"; 		
+                $sql = "select productCode, productName, productLine, productScale, buyPrice from products"; 		
             break;
             case "allByProductLine":
                 $queryString = EscapeInput ($conn,$queryString); //escape input 
-                $sql = "select productName, productLine, productScale, buyPrice from products where productLine like '$queryString'";
+                $sql = "select productCode, productName, productLine, productScale, buyPrice from products where productLine like '$queryString'";
             break;
             case "allByProductVendor":
                 $queryString = EscapeInput ($conn,$queryString); //escape input 
-                $sql = "select productName, productLine, productScale, buyPrice from products where productVendor like '$queryString'";
+                $sql = "select productCode, productName, productLine, productScale, buyPrice from products where productVendor like '$queryString'";
             break;
             case "allByLineAndVendor":
                 $queryString = EscapeInput ($conn,$queryString); //escape input 
                 $anotherQueryString = EscapeInput ($conn,$anotherQueryString); //escape input
-                $sql = "select productName, productLine, productScale, buyPrice from products where productLine like '$queryString' and productVendor like '$anotherQueryString'";
+                $sql = "select productCode, productName, productLine, productScale, buyPrice from products where productLine like '$queryString' and productVendor like '$anotherQueryString'";
             break;
 
         }
@@ -43,6 +42,12 @@
             else $sql .= " and productName like '%$searchString%';"; 
         }
         else $sql .= ";";
+
+        //now our clickable result (here so it's CLEAN without the search string)
+        if ($queryType == "byID"){
+            $queryString = EscapeInput ($conn,$queryString); //escape input 
+            $sql = "select * from products where productCode like '$queryString';";
+        }
          		
         //We do these two here to save having to worry about them being altered by the search query.
         switch($queryType){
@@ -76,7 +81,7 @@
     catch (mysqli_sql_exception $e)
     {
         echo "Sorry, an Error occurred <br /> ";
-        //echo $e; //*******REMOVE BEFORE UPLOADING*****/
+        echo $e; //*******REMOVE BEFORE UPLOADING*****/
         return false;
     }
 ?>

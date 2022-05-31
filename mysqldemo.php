@@ -15,6 +15,26 @@
 <div class="container">
     <!--Header Here-->
     <?php include 'includes/header.php' ?>
+    <!--MODAL POP UP-->
+    <div class="modal fade" id="clickedRecordModal" tabindex="-1" aria-labelledby="clickedRecordModalLabel" aria-modal="true" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header text-bg-primary">
+          <h5 class="modal-title" id="clickedRecordModalLabel">Stock Number <span id="indivResultID"></span></h5>
+          <button type="button btn-primary" class="btn-close" aria-label="Close"  onclick="closeModal()"></button>
+        </div>
+        <div class="modal-body" id="modalRecordData"> We can load the record data here</div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="closeModal()">Close</button>
+          
+        </div>
+      </div>
+    </div>
+    </div>
+    <div class="modal-backdrop fade show" id="backdrop"  style="display: none;"></div>
+    <!--End of Modal Popup-->
+    
+    
     <div class="row shadow p-3 mb-5 bg-body rounded mt-4">
         <h2>MySQL Demo with PHP and Bootstrap</h2>
         <p>This is going to be a simple working demo of a database. We will only be covering queries, no insertions or deletions. This saves me having to build an authentication system which is a bit more than I intend to do for a quick demonstration. The database we are using had been downloaded from the <a href="https://www.mysqltutorial.org/mysql-sample-database.aspx">mysqltutorial.org</a> website. It's for a company selling toy vehicles, a bit like "Dinky", "Corgi" etc.</p>

@@ -11,6 +11,9 @@ const selectPL1stChild = document.getElementById("selectPL1stChild");
 const selectPV1stChild = document.getElementById("selectPV1stChild");
 const applyButton = document.getElementById("applyButton");
 const searchBox = document.getElementById("nameSearch2");
+const indivResultID = document.getElementById('indivResultID');
+const indivResultData = document.getElementById('indivResultData');
+const modalRecordData = document.getElementById('modalRecordData');
 
 for (var i = 0; i < radio.length; i++) radio[i].addEventListener('change', Validate);
 pgBack.addEventListener("click",()=>changePage("back"));
@@ -20,6 +23,7 @@ applyButton.addEventListener("click",()=>applyFilters());
 var colCounter = 1;
 var currentPage = 1;
 var numberPerPage;
+var thisRecord;
 
 function applyFilters(){
     var selectedPL = selectPL.value;
@@ -62,7 +66,7 @@ const buildData =  () =>{
     //if correct index for current page
     if (elementIndex >= ((numberPerPage * currentPage) - numberPerPage) && elementIndex < (numberPerPage * currentPage) ){
         //build the string
-        var elementColString ="<div class=\"col p-2 m-2 border bg-primary\">\n" + "<b>Model Name:</b> " + element.productName + "<br>" + "<b>Product Line:</b> " + element.productLine + "<br>" + "<b>Scale:</b> " + element.productScale + "<br>" + "<b>Price: </b>£" + element.buyPrice + "</div><br>";
+        var elementColString ="<div class=\"col p-2 m-2 border bg-primary clickable\" id=\"" + element.productCode + "\">\n" + "<b>Model Name:</b> " + element.productName + "<br>" + "<b>Product Line:</b> " + element.productLine + "<br>" + "<b>Scale:</b> " + element.productScale + "<br>" + "<b>Price: </b>£" + element.buyPrice + "</div><br>";
         if (colCounter == 1) listing += "<div class=\"row py-2\">"; //if first row, add start div for it
         listing += elementColString; //whatever column, add the contents from pre-built string
         if (colCounter < 3) {colCounter++;} // if not last column, increment counter
@@ -132,6 +136,7 @@ function UpdateDisplay(){
     if (thisResponse.startsWith("undefined")) thisResponse = thisResponse.substring(9,thisResponse.length); //HACK
     responseBox.innerHTML = thisResponse;
     numResults.innerHTML= dBaseResult.length;
+    addListenersToResults(); 
 }
 
 //populates and adds listeners to the page numbers on the page selection bar
@@ -166,7 +171,6 @@ function getData(opts, stringToQuery="", anotherStringToQuery="") {
     formData.append('queryString', stringToQuery);
     formData.append('queryString2', anotherStringToQuery);
     var searchString = searchBox.value;
-    console.log(searchString);
     formData.append ('searchString', searchString);
     fetch('includes/modelcarsall.php', {
       method: 'post',
@@ -179,10 +183,14 @@ function getData(opts, stringToQuery="", anotherStringToQuery="") {
                 dBaseProductLines = response;
                 populateProductLineListBox();
                 break;
-                case "productVendor":
-                    dBaseProductVendor = response;
-                    populateProductVendorListBox();
-                    break;
+            case "productVendor":
+                dBaseProductVendor = response;
+                populateProductVendorListBox();
+                break;
+            case "byID":
+                thisRecord = response;
+                showItem();
+                break;
             case "all":
             case "allByProductLine":
             case "allByProductVendor":
@@ -196,7 +204,58 @@ function getData(opts, stringToQuery="", anotherStringToQuery="") {
           noData();
       });
   }
-//Now we can call in some data to start
+
+//sort out our listerner and handler for click on an individual result
+function addListenersToResults(){
+    var clickables = document.querySelectorAll(".clickable");
+    
+    clickables.forEach((clickable, clickableIndex)=>{ 
+      
+        clickable.addEventListener('click', ()=>{getData("byID", clickable.id); });
+    }); 
+}
+
+function showItem(){
+    indivResultID.innerHTML=thisRecord[0].productCode;
+    var modalContent = "<b>Product Name:</b><br><div class=\"text-center\">" + thisRecord[0].productName;
+    modalContent += "</div><br><b>Product Line:</b> " + thisRecord[0].productLine;
+    modalContent += "&nbsp;&nbsp;&nbsp;<b>Product Scale: </b>" + thisRecord[0].productScale;
+    modalContent += "<br><br><b>Product Description:</b><br>" + thisRecord[0].productDescription;
+    modalContent += "<br><br><b>Product Vendor:</b><div class=\"text-center\">" + thisRecord[0].productVendor;
+    modalContent += "</div><table class=\"table text-center\"><tr class=\"fw-bold\">";
+    modalContent += "<td>Qty In Stock</td><td>Wholesale Price</td><td>Retal Price</td>"; 
+    modalContent += "<br><tr class=\"text-center\"><td>" + thisRecord[0].quantityInStock + "</td><td>£";
+    modalContent += thisRecord[0].buyPrice + "</td><td>£" + thisRecord[0].MSRP + "</td>";
+    modalContent += "</tr></table>"
+    modalRecordData.innerHTML = modalContent;
+    openModal();
+}
+
+//open the modal
+function openModal() {
+    document.getElementById("backdrop").style.display = "block"
+    document.getElementById("clickedRecordModal").style.display = "block"
+    document.getElementById("clickedRecordModal").className += "show"
+}
+
+//close the modal
+function closeModal() {
+    document.getElementById("backdrop").style.display = "none"
+    document.getElementById("clickedRecordModal").style.display = "none"
+    document.getElementById("clickedRecordModal").className += document.getElementById("clickedRecordModal").className.replace("show", "")
+}
+// Get the modal
+var modal = document.getElementById('clickedRecordModal');
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal) {
+    closeModal()
+  }
+}
+
+//Populate screen with initial results
 getData("all");
+//populate selection boxes
 getData("productLine");
 getData("productVendor");
