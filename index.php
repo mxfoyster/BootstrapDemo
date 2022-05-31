@@ -18,7 +18,7 @@
         <h2>Some random stuff</h2>
         <p>This is just an opportunity I have taken to familiarise myself with Bootstrap. from my journay so far, I have discovered that whilst default styles are prohibitive, there are the possibilities of overriding them (which I have done in one case) and there are many templates available that I might explore later.</p>
         <p>My conclusion is that if I am after a very specific looking design that is optimised for UX, Bootstrap would probably not be my first choice. However, for making reasonable looking front ends quickly for tying into a backend or for the purposes of a functional prototype for a website, I think it is extremely useful.</p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        <p>For some more serious stuff, check out the demo with MySQL.</p>
         <h3>Hey, if you're bored, press the button!</h3>
         <button type="button" class="col-sm-2 btn btn-primary btn-lg m-3"  data-bs-toggle="modal" data-bs-target="#exampleModal">Open PopUp</button>
    

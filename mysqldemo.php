@@ -52,6 +52,12 @@
                     </select>
                 </div>
                 <div class="col">
+                    <div class="fs-6 fw-bold">Search by Name</div>
+                    <input class="form-control" type="text" name="carName" id="nameSearch2">
+                    <div id="emailHelp" class="form-text">NOT case sensitive</div>
+                    </select>
+                </div>
+                <div class="col">
                     <button type="button" class="btn btn-sml btn-primary float-end" id="applyButton">Apply</button>
                 </div>
             </div><hr>

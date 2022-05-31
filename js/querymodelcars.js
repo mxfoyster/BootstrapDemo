@@ -10,6 +10,7 @@ const selectPV = document.getElementById("selectPV");
 const selectPL1stChild = document.getElementById("selectPL1stChild");
 const selectPV1stChild = document.getElementById("selectPV1stChild");
 const applyButton = document.getElementById("applyButton");
+const searchBox = document.getElementById("nameSearch2");
 
 for (var i = 0; i < radio.length; i++) radio[i].addEventListener('change', Validate);
 pgBack.addEventListener("click",()=>changePage("back"));
@@ -164,6 +165,9 @@ function getData(opts, stringToQuery="", anotherStringToQuery="") {
     formData.append('queryType', opts);
     formData.append('queryString', stringToQuery);
     formData.append('queryString2', anotherStringToQuery);
+    var searchString = searchBox.value;
+    console.log(searchString);
+    formData.append ('searchString', searchString);
     fetch('includes/modelcarsall.php', {
       method: 'post',
       body: formData
@@ -171,26 +175,17 @@ function getData(opts, stringToQuery="", anotherStringToQuery="") {
         return response.json();
     }).then(function(response) {
         switch (opts){
-            case "all":
-                dBaseResult = response;
-                Validate();
-                break;
             case "productLine":
                 dBaseProductLines = response;
                 populateProductLineListBox();
                 break;
-            case "productVendor":
-                dBaseProductVendor = response;
-                populateProductVendorListBox();
-                break;
+                case "productVendor":
+                    dBaseProductVendor = response;
+                    populateProductVendorListBox();
+                    break;
+            case "all":
             case "allByProductLine":
-                // dBaseResult = response;
-                // Validate();
-                // break;
             case "allByProductVendor":
-                // dBaseResult = response;
-                // Validate();
-                // break;
             case "allByLineAndVendor":
                 dBaseResult = response;
                 Validate();
