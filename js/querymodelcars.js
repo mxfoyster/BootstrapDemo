@@ -15,6 +15,7 @@ const indivResultID = document.getElementById('indivResultID');
 const indivResultData = document.getElementById('indivResultData');
 const modalRecordData = document.getElementById('modalRecordData');
 
+
 for (var i = 0; i < radio.length; i++) radio[i].addEventListener('change', Validate);
 pgBack.addEventListener("click",()=>changePage("back"));
 pgFwd.addEventListener("click",()=>changePage("fwd"));

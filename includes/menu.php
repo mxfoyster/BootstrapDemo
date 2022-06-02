@@ -11,7 +11,7 @@
                 <li class="nav-item"><a class="nav-link active" aria-current="page" href="index.php">Home</a></li>
                 <li class="nav-item"><a class="nav-link" href="bootstrap2.php">More Bootstrap</a></li>
                 <li class="nav-item"><a class="nav-link" href="mysqldemo.php">MySQL Demo</a></li>
-                <li class="nav-item"><a class="nav-link disabled">Disabled</a></li>
+                <li class="nav-item"><a class="nav-link" href="mysqlcode.php">MySQL Demo Explained</a></li>
             </ul>
         </div>
     </div>
