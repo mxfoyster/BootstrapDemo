@@ -224,7 +224,7 @@ function showItem(){
     modalContent += "<br><br><b>Product Description:</b><br>" + thisRecord[0].productDescription;
     modalContent += "<br><br><b>Product Vendor:</b><div class=\"text-center\">" + thisRecord[0].productVendor;
     modalContent += "</div><table class=\"table text-center\"><tr class=\"fw-bold\">";
-    modalContent += "<td>Qty In Stock</td><td>Wholesale Price</td><td>Retal Price</td>"; 
+    modalContent += "<td>Qty In Stock</td><td>Wholesale Price</td><td>Retail Price</td>"; 
     modalContent += "<br><tr class=\"text-center\"><td>" + thisRecord[0].quantityInStock + "</td><td>£";
     modalContent += thisRecord[0].buyPrice + "</td><td>£" + thisRecord[0].MSRP + "</td>";
     modalContent += "</tr></table>"
