@@ -51,8 +51,10 @@
                
         
         <h3 class="mt-5">Dynamic selection</h3>
-        <p>Now, let's make something a little more complicated. We will stick to the same table within the database. By adding some more controls, we can give the user more options to search through all the listings. The default can be to list everything with a set limit on how many are displayed at once. From there, we can provide tools within our UI to filter the data and change the order which thems are displayed in. Bootstrap should simplify this process.</p>
+        <p>Now, let's make something a little more complicated. We will stick to the same table within the database. By adding some more controls, we can give the user more options to search through all the listings. The default can be to list everything with a set limit on how many are displayed at once. From there, we can provide tools within our UI to filter the data and help the user choose the data they wish to display. Bootstrap should simplify this process.</p>
         <p>To achieve this goal, we now have to change tack and update the data dynamically by manipulating the DOM. We can use JavaScript on the client side. the <i>fetch()</i> api will handle our requests and responses, <i>.innerHTML</i> will allow us to add and remove the contents of elements without reloading.</p>
+
+        <p><b>Clicking</b> one of the <b>blue</b> data boxes will instantiate a popup with complete details of the product.</p>
         
         <div class="container">
         
@@ -109,10 +111,7 @@
         </div>
         <hr>
         <script>
-        //  dBaseResult = (<?php //include 'includes/modelcarsall.php' ?>);
-        // dBaseProductLines = (<?php //include 'includes/modelcarsbyproductline.php' ?>);
-        // dBaseProductVendor = (<?php //include 'includes/modelcarsbyproductvendor.php' ?>);
-        
+              
         </script>
         <div class="container" id="responseBox"></div>
     </div>
