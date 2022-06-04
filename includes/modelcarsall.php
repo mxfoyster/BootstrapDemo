@@ -5,9 +5,8 @@
     $searchString = $_POST['searchString'];
     require_once("dbasefunctions.php");
 
-    $driver = new mysqli_driver();
+    //choose the database we wish to use
     $dbase = "classicmodels";
-    $driver->report_mode = MYSQLI_REPORT_STRICT | MYSQLI_REPORT_ERROR;
     try
     {
         //set up our connection

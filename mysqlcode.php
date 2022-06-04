@@ -110,7 +110,8 @@
         <p>We do need to connect to the database, so I have a separate PHP file to do that. I use <code>require_once()</code> to import it and start setting up some other connection details next: </p>
         <pre><code>
             require_once("dbasefunctions.php");
-            $driver = new mysqli_driver();
+            
+            //choose the database we wish to use
             $dbase = "classicmodels";
             $driver->report_mode = MYSQLI_REPORT_STRICT | MYSQLI_REPORT_ERROR;
         </code></pre>
@@ -232,7 +233,7 @@
                 return $escapedInput;
             }
         </code></pre>
-        <p>It just specifies the connection detalis like username and password for the database (a good reason to have it 'twice removed' from the client!) and makes the connection. Note, as I write this, I see I have some duplicated code which I can remove from the main file. The <code>$driver</code> is set up twice at present, as is the <i>report mode.</i> That will have to be corrected.</p>
+        <p>It just specifies the connection detalis like username and password for the database (a good reason to have it 'twice removed' from the client!) and makes the connection.</p>
 
         <p>The second function (<code>escapeInput()</code>) just takes a string and uses the <code>mysqli</code> API function to escape the input thus helping avoid any <b><i>SQL Injection</i></b> attacks.</p>
 
